@@ -305,10 +305,10 @@ function cerrarMapa() {
 	let mapa = document.getElementById('mapa');
 
 	contenedorMapa.style.opacity = 0;
-	contenedorMapa.style.zIndex = -1;
+	contenedorMapa.style.zIndex = -99;
 
 	mapa.style.opacity = 0;
-	mapa.style.zIndex = -1;
+	mapa.style.zIndex = -99;
 
 	document.body.style.overflow = 'visible';
 

@@ -38,6 +38,10 @@ form {
   margin: 0px; }
 
 #formulario {
+  position: fixed;
+  top: 10px;
+  width: 60%;
+  z-index: 1;
   background-color: white;
   margin: 0px;
   margin-top: 10px;
@@ -69,7 +73,8 @@ form {
   grid-column-gap: 15px;
   grid-row-gap: 30px;
   align-items: center;
-  justify-items: center; }
+  justify-items: center;
+  margin-top: 300px; }
   #fallas .divFalla {
     height: 100%;
     width: 300px;
@@ -114,7 +119,7 @@ form {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -2;
+  z-index: -99;
   align-items: center;
   justify-content: center;
   opacity: 0; }
@@ -126,7 +131,7 @@ form {
   position: fixed;
   top: 15%;
   left: 15%;
-  z-index: -2;
+  z-index: -99;
   opacity: 0;
   border: 5px solid yellow; }
 
@@ -134,15 +139,17 @@ form {
   body {
     padding-left: 5%;
     padding-right: 5%; }
+  #formulario {
+    width: 96%; }
   .formularioSinMostrar {
-    position: relative;
-    top: -320px;
+    position: relative !important;
+    top: -320px !important;
     transition: transform 0.5s; }
   .formularioMostrado {
     transform: translateY(440px); }
   .hamburger {
     cursor: pointer;
-    z-index: 9999;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -151,7 +158,9 @@ form {
     border: 2px solid black;
     content: url("img/cthulhu.jpg"); }
   #fallas {
-    padding-top: 150px; }
+    margin-top: 100px;
+    padding-top: 150px;
+    margin-top: 0px; }
   .fallasMovil {
     position: absolute;
     top: 20px; }
