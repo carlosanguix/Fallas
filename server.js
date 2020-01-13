@@ -33,9 +33,7 @@ mongoose.Promise = global.Promise;
 
 // MONGO Conexión
 mongoose.connect(dbConfig.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
+    useNewUrlParser: true
 }).then(() => {
     console.log(" * BDD Mongo cargada");
 }).catch(err => {
