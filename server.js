@@ -55,7 +55,7 @@ app.use(express.static(path.join(__dirname, 'sirviendo')));
 require('./app/routes/puntuaciones.routes.js')(app);
 
 // Puerto de escucha
-let port = process.env.PORT;
+let port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(" * Corriendo en el puerto " + port);
 });

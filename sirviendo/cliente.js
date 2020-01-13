@@ -475,8 +475,8 @@ function puntuarFallasRandom() {
 					'Content-Type': 'application/json'
 				}
 			}).then(res => res.json())
-				.catch(error => console.error('Error:', error))
-				.then(response => console.log('Success:', response));
+			.then(response => console.log('Success:', response))
+			.catch(error => console.error('Error:', error));
 		}
 	});
 }
@@ -513,7 +513,7 @@ function init() {
 
 	// Añadimos puntuaciones random a la BBDD de las puntuaciones
 	setTimeout( ()=>{
-		puntuarFallasRandom();
+		//puntuarFallasRandom();
 	}, 1000);
 }
 
