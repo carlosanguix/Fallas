@@ -35,6 +35,8 @@ function listar() {
 			console.log("error");
 		});
 
+
+
 	function rellenarCamposFiltros() {
 
 		// Recogemos las secciones no repetidas y las metemos en un array
@@ -62,6 +64,7 @@ function listar() {
 			selectSecciones.appendChild(optionSeccion);
 		}
 	}
+
 }
 
 // Recogemos los filtros del DOM
@@ -133,7 +136,7 @@ function mostrarPuntuacionFallasFiltradas() {
 
 			if (urlLogo.includes(100)) {
 				console.log('chulu');
-				fallasDOM[i].style.border = '5px solid #05550B';
+				fallasDOM[i].style.border = '5px solid #00FF13';
 			} else {
 				console.log('evil');
 				fallasDOM[i].style.border = '5px solid #FF0000';
@@ -194,8 +197,9 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 
 		// ESTRELLAS
 		// Creamos contenedores de estrellas
-		let starsfield = document.createElement('fieldset');
+		let starsfield = document.createElement('div');
 		starsfield.classList.add('rating');
+		//starsfield.addEventListener('mouseover', mostrarPuntuacionesPorEstrtellas);
 		
 		let starsForm = document.createElement('form');
 		
@@ -243,12 +247,29 @@ function pintarFallasFiltradas(fallasFiltradas, tamanyo) {
 }
 
 function mostrarPuntuacionesPorEstrtellas() {
-	console.log(this);
+
+	console.log(this.parentElement.offsetTop);
+	console.log(this.parentElement.offsetLeft);
+
+	let divFalla = this.parentElement;
+
+	console.log(divFalla)
+
+	let x = this.parentElement.offsetLeft;
+	let y = this.parentElement.offsetTop;
+
+	let estrellasDetalladas = document.createElement('div');
+	estrellasDetalladas.style.top = x;
+	estrellasDetalladas.style.right = y;
+	estrellasDetalladas.classList.add('estrellasDetalladas');
+
+	divFalla.appendChild(estrellasDetalladas);
 }
 
 // Función con la que abrimos el mapa
 function mostrarUbicacion() {
 	
+	// Nos quedamos con la ubicación de la falla seleccionada
 	let ubicacion;
 	let idFallaUbicacion = this.parentElement.getAttribute('idFalla');
 
@@ -281,12 +302,13 @@ function mostrarUbicacion() {
 		}
 	}
 
+	// Convertimos las coordenadas recibidas en coordenadas que acepte nuestro mapa importado en el HTML
 	let firstProjection = '+proj=utm +zone=30 +ellps=GRS80 +units=m +no_defs';
     let secondProjection = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
     let coordenadas = proj4(firstProjection, secondProjection, ubicacion);
 
+	// Indicamos la marca señalada en nuestro mapa (Las coordenadas van al revés)
 	let map = L.map('mapa').setView([coordenadas[1], coordenadas[0]], 30);
-
 	let marker = L.marker([coordenadas[1], coordenadas[0]]).addTo(map);
 
 	let tilerMapUrl = 'https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=FeZF25xvZUuP463NS59g';
@@ -310,8 +332,8 @@ function cerrarMapa() {
 	mapa.style.opacity = 0;
 	mapa.style.zIndex = -99;
 
+	// Quitamos el scroll del ratón cuando el mapa se esté mostrando
 	document.body.style.overflow = 'visible';
-
 }
 
 // Enviamos la puntuación al servidor para validarla
@@ -431,6 +453,34 @@ function funcionalidadMenu() {
 	fallas.classList.toggle('fallasMovil');
 }
 
+function puntuarFallasRandom() {
+	fallasJSON.forEach(element => {
+		//console.log(element.properties.id);
+		for (let i = 0; i < 3; i++) {
+
+			let rnd = Math.floor((Math.random() * 5) + 1);
+
+			let ip = '192.168.0.' + i;
+
+			let data = {
+				idFalla: element.properties.id,
+				ip: ip,
+				puntuacion: rnd
+			};
+
+			fetch('/puntuaciones', {
+				method: 'POST',
+				body: JSON.stringify(data),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => res.json())
+				.catch(error => console.error('Error:', error))
+				.then(response => console.log('Success:', response));
+		}
+	});
+}
+
 function init() {
 
 	// Inicializamos lo necesario
@@ -439,6 +489,7 @@ function init() {
 	todasPuntuaciones = [];
 	listar();
 
+	// Damos funcionalidad al menú de filtrado
 	document.querySelector('.hamburger').addEventListener('click', funcionalidadMenu);
 
 	// Nos quedamos con el año
@@ -459,6 +510,11 @@ function init() {
 	document.getElementById('anyoHasta').addEventListener('focusout', aplicarFiltros);
 	document.getElementById('principal').addEventListener('click', aplicarFiltros);
 	document.getElementById('infantil').addEventListener('click', aplicarFiltros);
+
+	// Añadimos puntuaciones random a la BBDD de las puntuaciones
+	setTimeout( ()=>{
+		// puntuarFallasRandom();
+	}, 1000);
 }
 
 window.onload = init;

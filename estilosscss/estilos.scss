@@ -5,17 +5,20 @@ $logo: "";
 $colorPrincipal: "";
 $colorSecundario: "";
 $colorTernario: "";
+$bg: "";
 
 @if $empresa == evilcorp {
   $logo: "img/evilcorp.png";
   $colorPrincipal: red;
   $colorSecundario: rgb(124, 0, 0);
   $colorTernario: rgb(0, 0, 0);
+  $bg: 'img/bgred.jpg';
 } @else {
   $logo: "img/cthulhu.jpg";
   $colorPrincipal: rgb(0, 100, 0);
   $colorSecundario: rgb(0, 54, 0);
   $colorTernario: rgb(0, 0, 0);
+  $bg: 'img/bggreen.jpg';
 }
 
 
@@ -29,7 +32,7 @@ body {
   padding-left: 20%;
   padding-right: 20%;
   font-size: x-large;
-
+/*
   background: linear-gradient(
     90deg,
     $colorPrincipal 0%,
@@ -38,6 +41,9 @@ body {
     $colorSecundario 92%,
     $colorPrincipal 100%
   );
+*/
+  background-image: url($bg);
+  background-attachment: fixed;
 }
 
 #logo {
@@ -198,6 +204,13 @@ form {
   z-index: -99;
   opacity: 0;
   border: 5px solid yellow;
+}   
+
+.estrellasDetalladas {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-color: blue;
 }
 
 @media (max-width: 600px) {
