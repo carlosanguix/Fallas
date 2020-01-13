@@ -513,7 +513,7 @@ function init() {
 
 	// Añadimos puntuaciones random a la BBDD de las puntuaciones
 	setTimeout( ()=>{
-		// puntuarFallasRandom();
+		puntuarFallasRandom();
 	}, 1000);
 }
 
